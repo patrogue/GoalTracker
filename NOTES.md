@@ -19,9 +19,7 @@ Implement CQRS pattern
 Implement proper Repository pattern
 Added logging
 Create entities to model database
-Sæt project op i GitHub
 Create project board in github and add tickets
-Lav github actions
 Learn AWS
 Deploy to AWS
 Transactional Outbox Pattern
