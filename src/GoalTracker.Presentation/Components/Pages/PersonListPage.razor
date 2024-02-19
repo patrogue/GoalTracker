@@ -23,13 +23,16 @@ else
 
 @code {
     [Inject]
-    private IPersonRepositry _personRepository { get; set; }
+    private IPersonRepositry? _personRepository { get; set; }
 
     private ICollection<Person> persons = new List<Person>();
 
     private async Task GetAllPersons()
     {
-        persons = await _personRepository.GetAllPersons();
+        if (_personRepository is not null)
+        {
+            persons = await _personRepository.GetAllPersons();
+        }
     }
 
     protected override async Task OnInitializedAsync()

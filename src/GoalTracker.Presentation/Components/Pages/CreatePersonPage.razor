@@ -23,7 +23,7 @@
 
 @code {
     [Inject]
-    private IPersonRepositry _personRepository { get; set; }
+    private IPersonRepositry? _personRepository { get; set; }
 
     private string forename = string.Empty;
     private string surname = string.Empty;
@@ -31,15 +31,18 @@
 
     private async Task CreatePerson()
     {
-        await _personRepository.CreatePerson(new Person
-            {
-                Forename = forename,
-                Surname = surname,
-                Email = email
-            });
+        if (_personRepository is not null)
+        {
+            await _personRepository.CreatePerson(new Person
+                {
+                    Forename = forename,
+                    Surname = surname,
+                    Email = email
+                });
 
-        forename = string.Empty;
-        surname = string.Empty;
-        email = string.Empty;
+            forename = string.Empty;
+            surname = string.Empty;
+            email = string.Empty;
+        }
     }
 }
