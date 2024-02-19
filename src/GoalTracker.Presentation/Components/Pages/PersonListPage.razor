@@ -1,0 +1,39 @@
+﻿@page "/personlist"
+@rendermode InteractiveServer
+
+<PageTitle>Person List</PageTitle>
+
+<h1>Person List (@persons.Count)</h1>
+
+@if (persons.Count > 0)
+{
+    <ul>
+        @foreach (Person person in persons)
+        {
+            <li>
+                @($"{person.Id}: {person.Forename} {person.Surname} - {person.Email}")
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Person list is empty!</p>
+}
+
+@code {
+    [Inject]
+    private IPersonRepositry _personRepository { get; set; }
+
+    private ICollection<Person> persons = new List<Person>();
+
+    private async Task GetAllPersons()
+    {
+        persons = await _personRepository.GetAllPersons();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllPersons();
+    }
+}
