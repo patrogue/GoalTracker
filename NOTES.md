@@ -9,7 +9,6 @@ https://www.youtube.com/watch?v=RgqCavV2cqQ
 Independent on EFCore
 
 # Todo
-Setup ssh key and personal access token
 Setup test projects for unittest, integrationtest, uitests and end-to-end tests
 Remove Warnings in repository
 Create exceptions for people if they don't exists
@@ -23,7 +22,6 @@ Create entities to model database
 Sæt project op i GitHub
 Create project board in github and add tickets
 Lav github actions
-Setup dependabot
 Learn AWS
 Deploy to AWS
 Transactional Outbox Pattern
