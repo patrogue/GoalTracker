@@ -3,12 +3,14 @@ using GoalTracker.Application.Abstractions;
 using GoalTracker.Infrastructure;
 using GoalTracker.Infrastructure.Repositories;
 using GoalTracker.Presentation.Components;
+using MudBlazor.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 string? connectionString = builder.Configuration.GetConnectionString("Default");
 
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+builder.Services.AddMudServices();
 builder.Services.AddDbContext<PersonDbContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddScoped<IPersonRepositry, PersonRepository>();
 

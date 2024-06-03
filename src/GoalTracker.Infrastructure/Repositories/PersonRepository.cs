@@ -30,7 +30,7 @@ public class PersonRepository(PersonDbContext context) : IPersonRepositry
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdatePerson(Guid personId, string forename, string surname, string email)
+    public async Task UpdatePerson(Guid personId, string firstName, string lastName, string email)
     {
         Person? person = _context.Person.FirstOrDefault(p => p.PersonId == personId);
 
@@ -40,8 +40,8 @@ public class PersonRepository(PersonDbContext context) : IPersonRepositry
             return;
         }
 
-        person.Forename = forename;
-        person.Surname = surname;
+        person.FirstName = firstName;
+        person.FirstName = lastName;
         person.Email = email;
 
         await _context.SaveChangesAsync();

@@ -1,0 +1,288 @@
+﻿@page "/clubs/{clubtag}/{teamtag}"
+
+<PageTitle>@club</PageTitle>
+
+<MudText Typo="Typo.h3">@club</MudText>
+<MudText Typo="Typo.h4">@division</MudText>
+<MudText Typo="Typo.h5">@team</MudText>
+
+<br>
+<MudDivider />
+<br>
+
+<MudChipSet SelectedChipsChanged="OnTournamentsChanged" MultiSelection="true" Filter="true">
+    <MudChip Text="Danmarksturnering" Variant="Variant.Text" Color="Color.Dark" Default="true" />
+    <MudChip Text="Pokalturnering" Variant="Variant.Text" Color="Color.Dark" />
+    <MudChip Text="Nordsjælland Cup" Variant="Variant.Text" Color="Color.Dark" />
+    <MudChip Text="Træningskampe" Variant="Variant.Text" Color="Color.Dark" />
+</MudChipSet>
+
+<br>
+
+<MudPaper Elevation="3" Class="pa-4">
+    <MudText Typo="Typo.h6">Top Players</MudText>
+
+    <br>
+
+    <MudCarousel TData="object" ShowArrows="false" ShowBullets="false" Style="height:143px;">
+        <MudCarouselItem>
+            <MudGrid Spacing="2">
+                <MudItem xs="6">
+                    <MudCard Outlined="true">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">Most Goals</MudText>
+                            <MudText Typo="Typo.body1">@mostGoals.Name</MudText>
+                            <MudText Typo="Typo.body2">@mostGoals.Goals Goals</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudCard Outlined="true">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">Most Goals Per Match</MudText>
+                            <MudText Typo="Typo.body1">@mostGoalsPerMatch.Name</MudText>
+                            <MudText Typo="Typo.body2">@(Math.Round(mostGoalsPerMatch.Goals * 1.0 /
+                                mostGoalsPerMatch.Matches, 2))
+                                Goals
+                                Per Match
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+        </MudCarouselItem>
+        <MudCarouselItem>
+            <MudGrid Spacing="2">
+                <MudItem xs="6">
+                    <MudCard Outlined="true">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">Most Assists</MudText>
+                            <MudText Typo="Typo.body1">@mostAssists.Name</MudText>
+                            <MudText Typo="Typo.body2">@mostAssists.Assists Assists</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudCard Outlined="true">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">Most Assists Per Match</MudText>
+                            <MudText Typo="Typo.body1">@mostAssistsPerMatch.Name</MudText>
+                            <MudText Typo="Typo.body2">@(Math.Round(mostAssistsPerMatch.Assists * 1.0 /
+                                mostAssistsPerMatch.Matches,
+                                2))
+                                Assists Per Match
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+        </MudCarouselItem>
+        <MudCarouselItem>
+            <MudGrid Spacing="2">
+                <MudItem xs="6">
+                    <MudCard Outlined="true">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">Most Points</MudText>
+                            <MudText Typo="Typo.body1">@mostPoints.Name</MudText>
+                            <MudText Typo="Typo.body2">@(mostPoints.Goals + mostPoints.Assists) Points</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudCard Outlined="true">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">Most Points Per Match</MudText>
+                            <MudText Typo="Typo.body1">@mostPointsPerMatch.Name</MudText>
+                            <MudText Typo="Typo.body2">@(Math.Round(mostPointsPerMatch.Goals * 1.0 /
+                                mostPointsPerMatch.Matches, 2) +
+                                Math.Round(mostPointsPerMatch.Assists * 1.0 /
+                                mostPointsPerMatch.Matches, 2)) Points Per Match
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+        </MudCarouselItem>
+    </MudCarousel>
+</MudPaper>
+
+<br>
+
+<MudPaper Elevation="3" Class="pa-4">
+    <MudText Typo="Typo.h6">Team Stats</MudText>
+
+    <br>
+
+    <MudGrid Spacing="2">
+        <MudItem xs="3">
+            <MudCard Outlined="true">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6">Goals</MudText>
+                    <MudText Typo="Typo.h3">@Goals</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="3">
+            <MudCard Outlined="true">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6">Assists</MudText>
+                    <MudText Typo="Typo.h3">@Assists</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="3">
+            <MudCard Outlined="true">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6">Points</MudText>
+                    <MudText Typo="Typo.h3">@(Goals + Assists)</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="3">
+            <MudCard Outlined="true">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6">Faults</MudText>
+                    <MudText Typo="Typo.h3">@Faults min</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="4">
+            <MudCard Outlined="true">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6">Goals Per Match</MudText>
+                    <MudText Typo="Typo.h3">@(Math.Round(Goals * 1.0 / Matches, 2))</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="4">
+            <MudCard Outlined="true">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6">Assists Per Match</MudText>
+                    <MudText Typo="Typo.h3">@(Math.Round(Assists * 1.0 / Matches, 2))</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="4">
+            <MudCard Outlined="true">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6">Points Per Match</MudText>
+                    <MudText Typo="Typo.h3">@(Math.Round(Goals * 1.0 / Matches, 2) + Math.Round(Assists * 1.0 /
+                        Matches, 2))</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+    @code {
+    [Parameter]
+    public string ClubTag { get; set; } = string.Empty;
+
+    [Parameter]
+    public string TeamTag { get; set; } = string.Empty;
+
+    private string club = string.Empty;
+    private string division = string.Empty;
+    private string team = string.Empty;
+
+    private IEnumerable<Player> players = [];
+
+    private int Matches;
+    private int Goals;
+    private int Assists;
+    private int Faults;
+
+    private Player mostGoals = new("N/a", 1, 0, 0, 0);
+    private Player mostGoalsPerMatch = new("N/a", 1, 0, 0, 0);
+    private Player mostAssists = new("N/a", 1, 0, 0, 0);
+    private Player mostAssistsPerMatch = new("N/a", 1, 0, 0, 0);
+    private Player mostPoints = new("N/a", 1, 0, 0, 0);
+    private Player mostPointsPerMatch = new("N/a", 1, 0, 0, 0);
+
+    protected override void OnInitialized()
+    {
+        club = "Greve Floorball Club";
+        division = "1. Division";
+        team = "Herre 1";
+
+        GetDummyData();
+    }
+
+    private void OnTournamentsChanged(MudChip[] tournaments)
+    {
+        if (tournaments.Length == 0)
+            // GetAllData();
+            GetDefaultData();
+        else
+            // GetData(tournaments);
+            GetDummyData();
+    }
+
+    private void GetDefaultData()
+    {
+        players = [];
+        Matches = 1;
+        Goals = 0;
+        Assists = 0;
+        Faults = 0;
+
+        mostGoals = new("N/a", 1, 0, 0, 0);
+        mostGoalsPerMatch = new("N/a", 1, 0, 0, 0);
+        mostAssists = new("N/a", 1, 0, 0, 0);
+        mostAssistsPerMatch = new("N/a", 1, 0, 0, 0);
+        mostPoints = new("N/a", 1, 0, 0, 0);
+        mostPointsPerMatch = new("N/a", 1, 0, 0, 0);
+    }
+
+    private void GetDummyData()
+    {
+        players = [
+        new("Adam Sunke", 14, 1, 1, 6),
+new("Allan Burrack Sunke", 12, 12, 5, 4),
+new("Damien Baynes", 8, 14, 4, 0),
+new("Jacob Grevelund", 11, 2, 7, 4),
+new("Jeppe Hove", 14, 12, 17, 16),
+new("Jimmi Starup Hansen", 4, 0, 1, 2),
+new("Kim Schelde", 13, 2, 1, 6),
+new("Lucas Norlander", 8, 0, 1, 0),
+new("Magnus Zachariassen", 13, 16, 8, 4),
+new("Mathias Handberg Jessen", 7, 1, 1, 0),
+new("Nichlas Halberg Madsen", 9, 3, 0, 32),
+new("Nicolai Blom", 14, 12, 10, 10),
+new("Patrick Handberg Jessen", 14, 2, 3, 2),
+new("Piotr Łaba", 4, 3, 1, 0),
+new("Szymon Szłapak", 4, 7, 3, 0),
+new("Tobias Norlander", 11, 0, 0, 12),
+];
+
+        GetMaximums();
+    }
+
+    private void GetAllData()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void GetData(MudChip[] tournaments)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void GetMaximums()
+    {
+        Matches = 14;
+        Goals = players.Sum(player => player.Goals);
+        Assists = players.Sum(player => player.Assists);
+        Faults = players.Sum(player => player.Faults);
+
+        mostGoals = players.MaxBy(p => p.Goals) ?? new("N/a", 1, 0, 0, 0);
+        mostGoalsPerMatch = players.MaxBy(p => p.Goals * 1.0 / p.Matches) ?? new("N/a", 1, 0, 0, 0);
+        mostAssists = players.MaxBy(p => p.Assists) ?? new("N/a", 1, 0, 0, 0);
+        mostAssistsPerMatch = players.MaxBy(p => p.Assists * 1.0 / p.Matches) ?? new("N/a", 1, 0, 0, 0);
+        mostPoints = players.MaxBy(p => p.Goals + p.Assists) ?? new("N/a", 1, 0, 0, 0);
+        mostPointsPerMatch = players.MaxBy(p => (p.Goals * 1.0 / p.Matches) + (p.Assists * 1.0 /
+        p.Matches)) ?? new("N/a", 1, 0, 0, 0);
+    }
+
+    private record Player(string Name, int Matches, int Goals, int Assists, int Faults);
+}

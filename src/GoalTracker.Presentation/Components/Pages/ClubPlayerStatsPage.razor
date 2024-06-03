@@ -1,0 +1,167 @@
+﻿@page "/clubs/{clubtag}/{teamtag}/players"
+
+<PageTitle>@club</PageTitle>
+
+<MudText Typo="Typo.h3">@club</MudText>
+<MudText Typo="Typo.h4">@division</MudText>
+<MudText Typo="Typo.h5">@team</MudText>
+
+<br>
+<MudDivider />
+<br>
+
+<MudChipSet SelectedChipsChanged="OnTournamentsChanged" MultiSelection="true" Filter="true">
+    <MudChip Text="Danmarksturnering" Variant="Variant.Text" Color="Color.Dark" Default="true" />
+    <MudChip Text="Pokalturnering" Variant="Variant.Text" Color="Color.Dark" />
+    <MudChip Text="Nordsjælland Cup" Variant="Variant.Text" Color="Color.Dark" />
+    <MudChip Text="Træningskampe" Variant="Variant.Text" Color="Color.Dark" />
+</MudChipSet>
+
+<br>
+
+<MudPaper Elevation="3" Class="pa-4">
+    <MudText Typo="Typo.h6">Player Stats</MudText>
+    <MudCheckBox @bind-Value="highlight" Label="Highlight Stats" Color="Color.Dark" />
+
+    <MudDataGrid Elevation="3" T="Player" Items="players" Striped="true" Bordered="true" Dense="true" Loading="loading"
+        SortMode="SortMode.Single" HeaderClass="table-head-bordered">
+        <ColGroup>
+            <col style="width: 100%" />
+        </ColGroup>
+        <Columns>
+            <PropertyColumn Property="player => player.Name" Title="Name" />
+            <PropertyColumn Property="player => player.Matches" Title="Matches"
+                CellStyleFunc="new Func<Player, string>(player => HighlightCell(player, player.Matches == maxMatches, COLOR_GREEN))" />
+
+            <PropertyColumn Property="player => player.Goals" Title="Goals"
+                CellStyleFunc="new Func<Player, string>(player => HighlightCell(player, player.Goals == maxGoals, COLOR_GREEN))"
+                InitialDirection="SortDirection.Descending" />
+
+            <PropertyColumn Property="player => player.Assists" Title="Assists"
+                CellStyleFunc="new Func<Player, string>(player => HighlightCell(player, player.Assists == maxAssists, COLOR_GREEN))" />
+
+            <PropertyColumn Property="player => player.Goals + player.Assists" Title="Points"
+                CellStyleFunc="new Func<Player, string>(player => HighlightCell(player, player.Goals + player.Assists == maxPoints, COLOR_GREEN))" />
+
+            <PropertyColumn Property="@(player => $"{player.Faults} min")" Title="Faults"
+                CellStyleFunc="new Func<Player, string>(player => HighlightCell(player, player.Faults == maxFaults, COLOR_RED))"
+                SortBy="new Func<Player, object>(player => player.Faults)" />
+        </Columns>
+        <NoRecordsContent>
+            <MudText>No players found!</MudText>
+        </NoRecordsContent>
+        <LoadingContent>
+            <MudText>Loading...</MudText>
+        </LoadingContent>
+    </MudDataGrid>
+</MudPaper>
+
+@code {
+    private const string COLOR_GREEN = "8CED8C";
+    private const string COLOR_RED = "ED8C8C";
+
+    [Parameter] public string ClubTag { get; set; } = string.Empty;
+    [Parameter] public string TeamTag { get; set; } = string.Empty;
+
+    private string club = string.Empty;
+    private string division = string.Empty;
+    private string team = string.Empty;
+
+    private IEnumerable<Player> players = [];
+
+    private bool highlight = true;
+    private int maxMatches = -1;
+    private int maxGoals = -1;
+    private int maxAssists = -1;
+    private int maxPoints = -1;
+    private int maxFaults = -1;
+
+    private bool loading = false;
+
+    private Func<Player, bool, string, string> HighlightCell => (player, match, color) =>
+    {
+        return highlight && match ? $"font-weight: 900; background-color:#{color}" : string.Empty;
+    };
+
+    protected override void OnInitialized()
+    {
+        loading = true;
+
+        club = "Greve Floorball Club";
+        division = "1. Division";
+        team = "Herre 1";
+
+        GetDummyData();
+
+        loading = false;
+    }
+
+    private void OnTournamentsChanged(MudChip[] tournaments)
+    {
+        loading = true;
+
+        if (tournaments.Length == 0)
+            // GetAllData();
+            GetDefaultData();
+        else
+            // GetData(tournaments);
+            GetDummyData();
+
+        loading = false;
+    }
+
+    private void GetDefaultData()
+    {
+        players = [];
+        maxMatches = -1;
+        maxGoals = -1;
+        maxAssists = -1;
+        maxPoints = -1;
+        maxFaults = -1;
+    }
+
+    private void GetDummyData()
+    {
+        players = [
+        new("Adam Sunke", 14, 1, 1, 6),
+new("Allan Burrack Sunke", 12, 12, 5, 4),
+new("Damien Baynes", 8, 14, 4, 0),
+new("Jacob Grevelund", 11, 2, 7, 4),
+new("Jeppe Hove", 14, 12, 17, 16),
+new("Jimmi Starup Hansen", 4, 0, 1, 2),
+new("Kim Schelde", 13, 2, 1, 6),
+new("Lucas Norlander", 8, 0, 1, 0),
+new("Magnus Zachariassen", 13, 16, 8, 4),
+new("Mathias Handberg Jessen", 7, 1, 1, 0),
+new("Nichlas Halberg Madsen", 9, 3, 0, 32),
+new("Nicolai Blom", 14, 12, 10, 10),
+new("Patrick Handberg Jessen", 14, 2, 3, 2),
+new("Piotr Łaba", 4, 3, 1, 0),
+new("Szymon Szłapak", 4, 7, 3, 0),
+new("Tobias Norlander", 11, 0, 0, 12),
+];
+
+        GetMaximums();
+    }
+
+    private void GetAllData()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void GetData(MudChip[] tournaments)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void GetMaximums()
+    {
+        maxMatches = players.Max(player => player.Matches);
+        maxGoals = players.Max(player => player.Goals);
+        maxAssists = players.Max(player => player.Assists);
+        maxPoints = players.Max(player => player.Goals + player.Assists);
+        maxFaults = players.Max(player => player.Faults);
+    }
+
+    private record Player(string Name, int Matches, int Goals, int Assists, int Faults);
+}
