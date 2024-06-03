@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoalTracker.Infrastructure.Repositories;
 
-public class PersonRepository(PersonDbContext context) : IPersonRepositry
+public class PersonRepository(GoalTrackerDbContext context) : IPersonRepositry
 {
-    private readonly PersonDbContext _context = context;
+    private readonly GoalTrackerDbContext _context = context;
 
     public async Task CreatePerson(Person person)
     {
@@ -15,9 +15,9 @@ public class PersonRepository(PersonDbContext context) : IPersonRepositry
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeletePerson(Guid personId)
+    public async Task DeletePerson(Guid id)
     {
-        Person? person = _context.Person.FirstOrDefault(p => p.PersonId == personId);
+        Person? person = _context.Person.FirstOrDefault(p => p.Id == id);
 
         // Throw exception if person does not exist
         if (person is null)
@@ -30,9 +30,9 @@ public class PersonRepository(PersonDbContext context) : IPersonRepositry
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdatePerson(Guid personId, string firstName, string lastName, string email)
+    public async Task UpdatePerson(Guid id, string firstName, string lastName, string email)
     {
-        Person? person = _context.Person.FirstOrDefault(p => p.PersonId == personId);
+        Person? person = _context.Person.FirstOrDefault(p => p.Id == id);
 
         // Throw exception if person does not exist
         if (person is null)
@@ -52,9 +52,9 @@ public class PersonRepository(PersonDbContext context) : IPersonRepositry
         return await _context.Person.ToListAsync();
     }
 
-    public async Task<Person> GetPersonById(Guid personId)
+    public async Task<Person> GetPersonById(Guid id)
     {
         // Throw exception if person does not exist
-        return await _context.Person.FirstOrDefaultAsync(p => p.PersonId == personId);
+        return await _context.Person.FirstOrDefaultAsync(p => p.Id == id);
     }
 }
