@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoalTracker.Infrastructure.Repositories;
 
-public class ClubRepository(GoalTrackerDbContext context) : IClubRepository
+public class ClubRepository(GoalTrackerContext context) : IClubRepository
 {
-    private readonly GoalTrackerDbContext _context = context;
+    private readonly GoalTrackerContext _context = context;
 
     public async Task CreateClub(Club club)
     {

@@ -11,8 +11,9 @@ string? connectionString = builder.Configuration.GetConnectionString("Default");
 
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 builder.Services.AddMudServices();
-builder.Services.AddDbContext<PersonDbContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddDbContext<GoalTrackerContext>(options => options.UseSqlite(connectionString));
 builder.Services.AddScoped<IPersonRepositry, PersonRepository>();
+builder.Services.AddScoped<IClubRepository, ClubRepository>();
 
 WebApplication app = builder.Build();
 

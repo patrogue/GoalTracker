@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GoalTracker.Infrastructure.Repositories;
 
-public class PersonRepository(GoalTrackerDbContext context) : IPersonRepositry
+public class PersonRepository(GoalTrackerContext context) : IPersonRepositry
 {
-    private readonly GoalTrackerDbContext _context = context;
+    private readonly GoalTrackerContext _context = context;
 
     public async Task CreatePerson(Person person)
     {
