@@ -9,5 +9,7 @@ public interface IClubRepository
     public Task UpdateClub(Guid id, string name, string tag, ICollection<Team> teams);
 
     public Task<ICollection<Club>> GetAllClubs();
+    public Task<Club> GetClubByName(string name);
+    public Task<Club> GetClubByTag(string tag);
     public Task<Club> GetClubById(Guid id);
 }

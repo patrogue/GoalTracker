@@ -9,12 +9,16 @@ https://www.youtube.com/watch?v=RgqCavV2cqQ
 Independent on EFCore
 
 # Todo
-Setup test projects for unittest, integrationtest, uitests and end-to-end tests
-Remove Warnings in repository
-Create exceptions for people if they don't exists
+NEED TO HAVE
+Model database
+Implement database
+Create interfaces and repositories to get data from database
+Add custom exceptions in repositories.
+Setup test projects for unittest, integrationtest, uitests and end-to-end tests to test repositories.
+
+NICE TO HAVE
 Validate data using FluentValidator
 Make sure dependency injections is utilized properly
-Take a look weather GUID or UUID would be better for id's for different entities
 Implement CQRS pattern
 Implement proper Repository pattern
 Added logging
